@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import SearchIconIllustration from '../../../assets/svgs/search-icon.svg'
 import CancelSearchIconIllustration from '../../../assets/svgs/cancel-search-icon.svg'
-import { Theme } from '../../theme/theme'
+import { Theme } from '../../theme'
 
 
 export default function SearchBar() {

@@ -1,12 +1,12 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
-import { Theme } from "../../theme/theme";
+import { Theme } from "../../theme";
 
 export type PokemonDetailProps = {
   data?: any
 }
 
-export default function PokemonDetail({ data }: PokemonDetailProps) {
+export default function PokemonDetailScreen({ data }: PokemonDetailProps) {
   // const { name, sprites, id, types } = data
   // const { other } = sprites
   // const { 'official-artwork': officialArtwork } = other
@@ -24,3 +24,7 @@ export default function PokemonDetail({ data }: PokemonDetailProps) {
 const styles = StyleSheet.create({
 
 })
+
+PokemonDetailScreen.navigationOptions = {
+  headerShown: false
+}

@@ -1,37 +1,33 @@
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { Theme } from "../../theme/theme"
+import { Pokemon } from '../types'
+import { Theme, getThemeByType} from "../../theme"
 
 export type PokemonCardProps = {
-  data: any
+  data: Pokemon
 }
 
 export default function PokemonCard({ data }: PokemonCardProps) {
-  const { name, sprites, id, types } = data
-  const { other } = sprites
-  const { 'official-artwork': officialArtwork } = other
-  const pokemonNumber = '#' + ('000' + id.toString()).slice(-3).toString()
-  const { type: pokemonType } = types[0]
-  const { name: typeName } = pokemonType
-  const pokemonName = name[0].toUpperCase() + name.slice(1)
+  const {frontDefault, id, name, types} = data
   const navigation = useNavigation()
 
   function onPress() {
     navigation.navigate('PokemonDetailScreen')
   }
 
+  
   return (
     <View>
-      <TouchableOpacity style={[styles.container, { borderColor: Theme[typeName] }]} onPress={onPress}>
+      <TouchableOpacity style={[styles.container, { borderColor: getThemeByType(types[0]) }]} onPress={onPress}>
         <View style={styles.pokemonNumberContainer}>
-          <Text style={[{ color: Theme[typeName], fontSize: 11, }]}>{pokemonNumber}</Text>
+          <Text style={[{ color: getThemeByType(types[0]), fontSize: 11, }]}>#00{id}</Text>
         </View>
         <View>
-          <Image source={{ uri: officialArtwork.front_default }} style={styles.image} />
+          <Image source={{ uri: frontDefault }} style={styles.image} />
         </View>
-        <View style={[styles.pokemonNameContainer, { backgroundColor: Theme[typeName] }]}>
-          <Text style={[styles.pokemonName, { color: Theme.background }]}>{pokemonName}</Text>
+        <View style={[styles.pokemonNameContainer, { backgroundColor: getThemeByType(types[0]) }]}>
+          <Text style={[styles.pokemonName, { color: Theme.background }]}>{name}</Text>
         </View>
       </TouchableOpacity>
     </View>

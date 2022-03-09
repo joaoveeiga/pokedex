@@ -13,10 +13,13 @@ export default function HomeNavigator() {
       <Screen
         name="HomePokedexScreen"
         component={HomePokedexScreen}
+        options={{headerShown: false}}
+
       />
       <Screen
         name="PokemonDetailScreen"
         component={PokemonDetailScreen}
+        options={PokemonDetailScreen.navigationOptions}
       />
     </Navigator>
   )
