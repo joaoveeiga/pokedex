@@ -4,7 +4,6 @@ import { SearchBar, PokemonCard } from '../components'
 import PokeballHeaderIllustration from '../../../assets/svgs/pokeball-header.svg'
 import SortByNumberIllustration from '../../../assets/svgs/sort-by-number.svg'
 import SortByNameIllustration from '../../../assets/svgs/sort-by-name.svg'
-import { PokemonDetailScreen } from '../screens'
 import { Pokemon } from '../types'
 
 
@@ -15,7 +14,7 @@ const pokemonOne: Pokemon = {
     "fire",
     "flying",
   ],
-  id: 6
+  id: 6,
 }
 
 
@@ -47,9 +46,6 @@ export default function HomePokedexScreen() {
       <SearchBar />
       <View style={styles.cardsContainer}>
         <PokemonCard data={pokemonOne} />
-        {/* <PokemonCard data={data2} />
-        <PokemonCard data={data3} /> */}
-        {/* <PokemonDetailScreen data={data3} /> */}
       </View>
     </View>
   )

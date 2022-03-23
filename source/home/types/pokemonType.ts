@@ -1,4 +1,3 @@
-import { ThemeType } from './../../theme/theme';
 type Pokemon = {
   name: string
   frontDefault: string
