@@ -3,9 +3,56 @@ import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Pokemon } from '../types'
 import { Theme, getThemeByType} from "../../theme"
+import { Formatter } from '../core/utils'
+import PokemonDetail from '../types/pokemonDetailType'
 
 export type PokemonCardProps = {
   data: Pokemon
+}
+
+const pokemonOneDetail: PokemonDetail = { 
+  name: "charizard",
+  frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
+  types: [
+    "fire",
+    "flying",
+  ],
+  id: 6,
+  weight: 905,
+  height: 17,
+  abilities: [
+    {
+      name: 'blaze',
+      isHidden: false,
+    },
+    {
+      name: 'solar-power',
+      isHidden: true,
+    },
+  ],
+  description: 'Spits fire that is hot enough to melt boulders. Known to cause forest fires unintentionally.',
+  stats: [
+    {
+      baseStat: 78,
+      name: 'hp',
+    },
+    {
+      baseStat: 84,
+      name: 'attack',
+    },{
+      baseStat: 78,
+      name: 'defense',
+    },{
+      baseStat: 109,
+      name: 'special-attack',
+    },{
+      baseStat: 85,
+      name: 'special-defense',
+    },{
+      baseStat: 100,
+      name: 'speed',
+    },
+  ]
 }
 
 export default function PokemonCard({ data }: PokemonCardProps) {
@@ -13,21 +60,22 @@ export default function PokemonCard({ data }: PokemonCardProps) {
   const navigation = useNavigation()
 
   function onPress() {
-    navigation.navigate('PokemonDetailScreen')
+    navigation.navigate('PokemonDetailScreen', {
+      data: pokemonOneDetail
+    })
   }
-
   
   return (
     <View>
       <TouchableOpacity style={[styles.container, { borderColor: getThemeByType(types[0]) }]} onPress={onPress}>
         <View style={styles.pokemonNumberContainer}>
-          <Text style={[{ color: getThemeByType(types[0]), fontSize: 11, }]}>#00{id}</Text>
+          <Text style={[{ color: getThemeByType(types[0]), fontSize: 11, }]}>#{id.toString().padStart(3, '0')}</Text>
         </View>
         <View>
           <Image source={{ uri: frontDefault }} style={styles.image} />
         </View>
         <View style={[styles.pokemonNameContainer, { backgroundColor: getThemeByType(types[0]) }]}>
-          <Text style={[styles.pokemonName, { color: Theme.background }]}>{name}</Text>
+          <Text style={[styles.pokemonName, { color: Theme.background }]}>{Formatter.capitalizeFirstLetter(name)}</Text>
         </View>
       </TouchableOpacity>
     </View>
