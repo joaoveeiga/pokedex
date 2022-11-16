@@ -1,22 +1,20 @@
-import { useNavigation } from '@react-navigation/native'
-import React from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { Pokemon } from '../types'
-import { Theme, getThemeByType} from "../../theme"
-import { Formatter } from '../core/utils'
-import PokemonDetail from '../types/pokemonDetailType'
+import {useNavigation} from '@react-navigation/native';
+import React from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Pokemon} from '../types';
+import {Theme, getThemeByType} from '../../theme';
+import {Formatter} from '../core/utils';
+import PokemonDetail from '../types/pokemonDetailType';
 
 export type PokemonCardProps = {
-  data: Pokemon
-}
+  data: Pokemon;
+};
 
-const pokemonOneDetail: PokemonDetail = { 
-  name: "charizard",
-  frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
-  types: [
-    "fire",
-    "flying",
-  ],
+const pokemonOneDetail: PokemonDetail = {
+  name: 'charizard',
+  frontDefault:
+    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
+  types: ['fire', 'flying'],
   id: 6,
   weight: 905,
   height: 17,
@@ -30,7 +28,8 @@ const pokemonOneDetail: PokemonDetail = {
       isHidden: true,
     },
   ],
-  description: 'Spits fire that is hot enough to melt boulders. Known to cause forest fires unintentionally.',
+  description:
+    'Spits fire that is hot enough to melt boulders. Known to cause forest fires unintentionally.',
   stats: [
     {
       baseStat: 78,
@@ -39,52 +38,66 @@ const pokemonOneDetail: PokemonDetail = {
     {
       baseStat: 84,
       name: 'attack',
-    },{
+    },
+    {
       baseStat: 78,
       name: 'defense',
-    },{
+    },
+    {
       baseStat: 109,
       name: 'special-attack',
-    },{
+    },
+    {
       baseStat: 85,
       name: 'special-defense',
-    },{
+    },
+    {
       baseStat: 100,
       name: 'speed',
     },
-  ]
-}
+  ],
+};
 
-export default function PokemonCard({ data }: PokemonCardProps) {
-  const {frontDefault, id, name, types} = data
-  const navigation = useNavigation()
+export default function PokemonCard({data}: PokemonCardProps) {
+  const {frontDefault, id, name, types} = data;
+  const navigation = useNavigation();
 
   function onPress() {
     navigation.navigate('PokemonDetailScreen', {
-      data: pokemonOneDetail
-    })
+      data: pokemonOneDetail,
+    });
   }
-  
+
   return (
     <View>
-      <TouchableOpacity style={[styles.container, { borderColor: getThemeByType(types[0]) }]} onPress={onPress}>
+      <TouchableOpacity
+        style={[styles.container, {borderColor: getThemeByType(types[0])}]}
+        onPress={onPress}>
         <View style={styles.pokemonNumberContainer}>
-          <Text style={[{ color: getThemeByType(types[0]), fontSize: 11, }]}>#{id.toString().padStart(3, '0')}</Text>
+          <Text style={[{color: getThemeByType(types[0]), fontSize: 11}]}>
+            #{id.toString().padStart(3, '0')}
+          </Text>
         </View>
+        <Image source={{uri: frontDefault}} />
         <View>
-          <Image source={{ uri: frontDefault }} style={styles.image} />
+          <Image source={{uri: frontDefault}} style={styles.image} />
         </View>
-        <View style={[styles.pokemonNameContainer, { backgroundColor: getThemeByType(types[0]) }]}>
-          <Text style={[styles.pokemonName, { color: Theme.background }]}>{Formatter.capitalizeFirstLetter(name)}</Text>
+        <View
+          style={[
+            styles.pokemonNameContainer,
+            {backgroundColor: getThemeByType(types[0])},
+          ]}>
+          <Text style={[styles.pokemonName, {color: Theme.background}]}>
+            {Formatter.capitalizeFirstLetter(name)}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
     borderWidth: 1,
     borderRadius: 5,
     width: 110,
@@ -114,5 +127,5 @@ const styles = StyleSheet.create({
   pokemonName: {
     alignSelf: 'center',
     justifyContent: 'center',
-  }
-})
+  },
+});
