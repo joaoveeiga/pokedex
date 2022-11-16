@@ -1,28 +1,29 @@
-import React from 'react'
-import { StyleSheet, View, Text, Image } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import React from 'react';
+import {StyleSheet, View, Text, Image} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
-import { Theme, getThemeByType } from "../../theme"
-import PokeballIllustration from '../../../assets/svgs/pokeball-background.svg'
-import GoBackArrowIllustration from '../../../assets/svgs/go-back-arrow.svg'
-import PreviousPokemonIllustration from '../../../assets/svgs/previous-pokemon.svg'
-import WeightIllustration from '../../../assets/svgs/weight-icon.svg'
-import HeightIllustration from '../../../assets/svgs/height-icon.svg'
-import NextPokemonIllustration from '../../../assets/svgs/next-pokemon.svg'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import { Formatter } from '../core/utils'
-import { Stats, Separator } from '../components'
+import {Theme, getThemeByType} from '../../theme';
+import PokeballIllustration from '../../../assets/svgs/pokeball-background.svg';
+import GoBackArrowIllustration from '../../../assets/svgs/go-back-arrow.svg';
+import PreviousPokemonIllustration from '../../../assets/svgs/previous-pokemon.svg';
+import WeightIllustration from '../../../assets/svgs/weight-icon.svg';
+import HeightIllustration from '../../../assets/svgs/height-icon.svg';
+import NextPokemonIllustration from '../../../assets/svgs/next-pokemon.svg';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Formatter} from '../core/utils';
+import {Stats, Separator} from '../components';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type Ability = {
-  isHidden: boolean
-  name: string
-}
+  isHidden: boolean;
+  name: string;
+};
 
-
-export default function PokemonDetailScreen({ route }) {
-
-  const { data } = route.params
-  const { name,
+export default function PokemonDetailScreen({route}) {
+  const {top, bottom} = useSafeAreaInsets();
+  const {data} = route.params;
+  const {
+    name,
     frontDefault,
     types,
     id,
@@ -30,28 +31,44 @@ export default function PokemonDetailScreen({ route }) {
     weight,
     abilities,
     description,
-    stats
-  } = data
-  const [firstType, secondType] = types
+    stats,
+  } = data;
+  const [firstType, secondType] = types;
 
-
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   function onPress() {
-    navigation.goBack()
+    navigation.goBack();
   }
 
   function renderAbilities(): JSX.Element[] {
     return abilities.map((item: Ability, index: number) => {
-      const { name, isHidden } = item
-      if (isHidden)
-        return <Text style={styles.abilityText} key={index}>{Formatter.capitalizeFirstLetter(name)} (Hidden)</Text>
-      return <Text style={styles.abilityText} key={index}>{Formatter.capitalizeFirstLetter(name)}</Text>
-    })
+      const {name: abilityName, isHidden} = item;
+      if (isHidden) {
+        return (
+          <Text style={styles.aboutTexts} key={index}>
+            {Formatter.capitalizeFirstLetter(abilityName)} (Hidden)
+          </Text>
+        );
+      }
+      return (
+        <Text style={styles.aboutTexts} key={index}>
+          {Formatter.capitalizeFirstLetter(abilityName)}
+        </Text>
+      );
+    });
   }
   return (
-    <View style={[styles.container, { backgroundColor: getThemeByType(types[0]) }]}>
-      <View style={styles.pokeballContainer}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: getThemeByType(types[0]),
+          paddingTop: top,
+          paddingBottom: bottom,
+        },
+      ]}>
+      <View style={[styles.pokeballContainer, {paddingTop: top}]}>
         <PokeballIllustration />
       </View>
       <View style={styles.headerContainer}>
@@ -59,9 +76,11 @@ export default function PokemonDetailScreen({ route }) {
           <TouchableOpacity onPress={onPress}>
             <GoBackArrowIllustration width={18} height={18} />
           </TouchableOpacity>
-          <Text style={styles.text}>{Formatter.capitalizeFirstLetter(name)}</Text>
+          <Text style={styles.text}>
+            {Formatter.capitalizeFirstLetter(name)}
+          </Text>
         </View>
-        <Text style={[styles.text, { fontSize: 16, }]}>#{id.toString().padStart(3, '0')}</Text>
+        <Text style={[styles.text]}>#{id.toString().padStart(3, '0')}</Text>
       </View>
 
       <View style={styles.pokemonImageContainer}>
@@ -69,7 +88,7 @@ export default function PokemonDetailScreen({ route }) {
           <PreviousPokemonIllustration />
         </TouchableOpacity>
 
-        <Image source={{ uri: frontDefault }} style={styles.image} />
+        <Image source={{uri: frontDefault}} style={styles.image} />
 
         <TouchableOpacity>
           <NextPokemonIllustration />
@@ -77,61 +96,79 @@ export default function PokemonDetailScreen({ route }) {
       </View>
 
       <View style={styles.pokemonDescriptionModal}>
-        <View style={styles.pokemonDescription}>
-
-          <View style={styles.pokemonTypesContainer}>
-            <View style={[styles.pokemonTypeContainer, { backgroundColor: getThemeByType(firstType) }]}>
-              <Text style={styles.typesText}>{Formatter.capitalizeFirstLetter(firstType)}</Text>
-            </View>
-            {secondType && <View style={[styles.pokemonTypeContainer, { backgroundColor: getThemeByType(secondType) }]}>
-              <Text style={styles.typesText}>{Formatter.capitalizeFirstLetter(secondType)}</Text>
-            </View>}
+        <View style={styles.pokemonTypesContainer}>
+          <View
+            style={[
+              styles.pokemonTypeContainer,
+              {backgroundColor: getThemeByType(firstType)},
+            ]}>
+            <Text style={styles.typesText}>
+              {Formatter.capitalizeFirstLetter(firstType)}
+            </Text>
           </View>
-
-          <Text style={[styles.aboutText, { color: getThemeByType(firstType) }]}>
-            About
-          </Text>
-
-          <View style={styles.aboutContainer}>
-
-            <View style={styles.weightAndHeightContainer}>
-              <View style={styles.weightAndHeightImageContainer}>
-                <WeightIllustration />
-                <Text style={styles.weightAndHeightNumbersText}>    {weight / 10} kg</Text>
-              </View>
-              <Text style={styles.bottomText}>Weight</Text>
+          {secondType && (
+            <View
+              style={[
+                styles.pokemonTypeContainer,
+                {backgroundColor: getThemeByType(secondType)},
+              ]}>
+              <Text style={styles.typesText}>
+                {Formatter.capitalizeFirstLetter(secondType)}
+              </Text>
             </View>
-            <Separator />
-
-            <View style={styles.weightAndHeightContainer}>
-              <View style={styles.weightAndHeightImageContainer}>
-                <HeightIllustration />
-                <Text style={styles.weightAndHeightNumbersText}>    {height / 10} m</Text>
-              </View>
-              <Text style={styles.bottomText}>Height</Text>
-            </View>
-            <Separator />
-
-            <View style={styles.abilitiesContainer}>
-              {renderAbilities()}
-              <Text style={styles.bottomText}>Abilities</Text>
-            </View>
-          </View>
-
-          <Text style={styles.abilityText}>{description}</Text>
-
-          <Text style={[styles.aboutText, { color: getThemeByType(firstType) }]}>Base Stats</Text>
-
-          <Stats type={firstType} stats={stats} />
+          )}
         </View>
+
+        <Text style={[styles.aboutText, {color: getThemeByType(firstType)}]}>
+          About
+        </Text>
+
+        <View style={styles.aboutContainer}>
+          <View style={styles.weightAndHeightContainer}>
+            <View style={styles.weightAndHeightImageContainer}>
+              <WeightIllustration />
+              <Text style={styles.aboutTexts}> {weight / 10} kg</Text>
+            </View>
+            <Text style={styles.bottomText}>Weight</Text>
+          </View>
+          <Separator />
+
+          <View style={styles.weightAndHeightContainer}>
+            <View style={styles.weightAndHeightImageContainer}>
+              <HeightIllustration />
+              <Text style={styles.aboutTexts}> {height / 10} m</Text>
+            </View>
+            <Text style={styles.bottomText}>Height</Text>
+          </View>
+          <Separator />
+
+          <View style={styles.abilitiesContainer}>
+            {renderAbilities()}
+            <Text style={styles.bottomText}>Abilities</Text>
+          </View>
+        </View>
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.abilityText}>{description}</Text>
+        </View>
+
+        <Text
+          style={[styles.baseStatsText, {color: getThemeByType(firstType)}]}>
+          Base Stats
+        </Text>
+
+        <Stats type={firstType} stats={stats} />
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-  abilitiesContainer: { 
-    justifyContent: 'space-evenly' 
+  descriptionContainer: {
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+  abilitiesContainer: {
+    justifyContent: 'space-evenly',
   },
   bottomText: {
     textAlign: 'center',
@@ -140,27 +177,31 @@ const styles = StyleSheet.create({
   },
   weightAndHeightImageContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
-  weightAndHeightNumbersText: {
+  aboutTexts: {
     fontSize: 10,
+    paddingLeft: 8,
     color: Theme.darkGray,
   },
+  baseStatsText: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    paddingBottom: 15,
+  },
   abilityText: {
-    fontSize: 10,
-    textAlign: 'justify',
+    fontSize: 14,
     color: Theme.darkGray,
   },
   aboutContainer: {
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-evenly',
-    paddingHorizontal: 20,
-
   },
   weightAndHeightContainer: {
     alignSelf: 'center',
     justifyContent: 'space-evenly',
-    height: 60,
+    minHeight: 60,
   },
   aboutText: {
     fontWeight: 'bold',
@@ -168,6 +209,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   pokemonTypesContainer: {
+    marginTop: 56,
     flexDirection: 'row',
     width: '40%',
     justifyContent: 'space-evenly',
@@ -203,42 +245,33 @@ const styles = StyleSheet.create({
     width: 300,
   },
   pokemonImageContainer: {
-    height: 300,
-    width: '100%',
     justifyContent: 'space-evenly',
-    alignSelf: 'center',
     flexDirection: 'row',
     alignItems: 'center',
     zIndex: 1,
-    marginTop: -30,
   },
   pokemonDescriptionModal: {
     backgroundColor: Theme.white,
-    flexDirection: 'row',
-    width: '98%',
-    alignSelf: 'center',
-    height: '65%',
+    height: '70%',
+    flex: 1,
     position: 'absolute',
-    bottom: 5,
-    borderRadius: 10,
-    justifyContent: 'space-evenly',
-  },
-  pokemonDescription: {
-    marginTop: 70,
+    marginTop: '85%',
+    borderRadius: 24,
     width: '100%',
     alignItems: 'center',
   },
   pokemonTypeContainer: {
-    borderRadius: 30,
+    borderRadius: 10,
     paddingHorizontal: 10,
     height: 25,
+    justifyContent: 'center',
   },
   typesText: {
     fontWeight: 'bold',
     color: Theme.white,
-  }
-})
+  },
+});
 
 PokemonDetailScreen.navigationOptions = {
-  headerShown: false
-}
+  headerShown: false,
+};
