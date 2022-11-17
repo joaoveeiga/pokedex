@@ -1,19 +1,18 @@
-import React, { useState } from 'react'
-import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
-import SearchIconIllustration from '../../../assets/svgs/search-icon.svg'
-import CancelSearchIconIllustration from '../../../assets/svgs/cancel-search-icon.svg'
-import { Theme } from '../../theme'
-
+import React, {useState} from 'react';
+import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
+import SearchIconIllustration from '../../../assets/svgs/search-icon.svg';
+import CancelSearchIconIllustration from '../../../assets/svgs/cancel-search-icon.svg';
+import {Theme} from '../../theme';
 
 export default function SearchBar() {
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('');
 
   function searchPokemon(pokemon: string) {
-    setSearch(pokemon)
+    setSearch(pokemon);
   }
-  
+
   function onPressCancelSearchIcon() {
-    setSearch('')
+    setSearch('');
   }
   return (
     <View style={styles.searchBarContainer}>
@@ -22,22 +21,24 @@ export default function SearchBar() {
       </View>
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder='Procurar'
+          placeholder="Procurar"
           onChangeText={searchPokemon}
-          placeholderTextColor={Theme['mediumGray']}
+          placeholderTextColor={Theme.mediumGray}
           style={[styles.textInput, search !== '' ? {width: 310} : null]}
           value={search}
         />
       </View>
-      {search !== '' &&
+      {search !== '' && (
         <View>
-          <TouchableOpacity style={styles.icons} onPress={onPressCancelSearchIcon}>
+          <TouchableOpacity
+            style={styles.icons}
+            onPress={onPressCancelSearchIcon}>
             <CancelSearchIconIllustration />
           </TouchableOpacity>
         </View>
-      }
+      )}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -64,6 +65,6 @@ const styles = StyleSheet.create({
   },
   icons: {
     paddingHorizontal: 5,
-    alignItems: 'flex-end'
-  }
-})
+    alignItems: 'flex-end',
+  },
+});

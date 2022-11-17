@@ -1,1 +1,1 @@
-export {default as Formatter} from './formatter'
+export {default as Formatter} from './formatter';
