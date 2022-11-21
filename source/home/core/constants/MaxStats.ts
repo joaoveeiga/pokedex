@@ -5,6 +5,6 @@ const MAX_STATS = {
   SATK: 194,
   SDEF: 250,
   SPD: 200,
-};
+}
 
-export default MAX_STATS;
+export default MAX_STATS

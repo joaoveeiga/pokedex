@@ -1,27 +1,27 @@
-import React from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import React from 'react'
+import {StyleSheet, View, Text, Image} from 'react-native'
+import {useNavigation} from '@react-navigation/native'
 
-import {Theme, getThemeByType} from '../../theme';
-import PokeballIllustration from '../../../assets/svgs/pokeball-background.svg';
-import GoBackArrowIllustration from '../../../assets/svgs/go-back-arrow.svg';
-import PreviousPokemonIllustration from '../../../assets/svgs/previous-pokemon.svg';
-import WeightIllustration from '../../../assets/svgs/weight-icon.svg';
-import HeightIllustration from '../../../assets/svgs/height-icon.svg';
-import NextPokemonIllustration from '../../../assets/svgs/next-pokemon.svg';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Formatter} from '../core/utils';
-import {Stats, Separator} from '../components';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {Theme, getThemeByType} from '../../theme'
+import PokeballIllustration from '../../../assets/svgs/pokeball-background.svg'
+import GoBackArrowIllustration from '../../../assets/svgs/go-back-arrow.svg'
+import PreviousPokemonIllustration from '../../../assets/svgs/previous-pokemon.svg'
+import WeightIllustration from '../../../assets/svgs/weight-icon.svg'
+import HeightIllustration from '../../../assets/svgs/height-icon.svg'
+import NextPokemonIllustration from '../../../assets/svgs/next-pokemon.svg'
+import {TouchableOpacity} from 'react-native-gesture-handler'
+import {Formatter} from '../core/utils'
+import {Stats, Separator} from '../components'
+import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
 type Ability = {
-  isHidden: boolean;
-  name: string;
-};
+  isHidden: boolean
+  name: string
+}
 
-export default function PokemonDetailScreen({route}) {
-  const {top, bottom} = useSafeAreaInsets();
-  const {data} = route.params;
+export default function PokemonDetailScreen({route}: any) {
+  const {top, bottom} = useSafeAreaInsets()
+  const {data} = route.params
   const {
     name,
     frontDefault,
@@ -32,31 +32,31 @@ export default function PokemonDetailScreen({route}) {
     abilities,
     description,
     stats,
-  } = data;
-  const [firstType, secondType] = types;
+  } = data
+  const [firstType, secondType] = types
 
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
   function onPress() {
-    navigation.goBack();
+    navigation.goBack()
   }
 
   function renderAbilities(): JSX.Element[] {
     return abilities.map((item: Ability, index: number) => {
-      const {name: abilityName, isHidden} = item;
+      const {name: abilityName, isHidden} = item
       if (isHidden) {
         return (
           <Text style={styles.aboutTexts} key={index}>
             {Formatter.capitalizeFirstLetter(abilityName)} (Hidden)
           </Text>
-        );
+        )
       }
       return (
         <Text style={styles.aboutTexts} key={index}>
           {Formatter.capitalizeFirstLetter(abilityName)}
         </Text>
-      );
-    });
+      )
+    })
   }
   return (
     <View
@@ -159,7 +159,7 @@ export default function PokemonDetailScreen({route}) {
         <Stats type={firstType} stats={stats} />
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -255,7 +255,8 @@ const styles = StyleSheet.create({
     height: '70%',
     flex: 1,
     position: 'absolute',
-    marginTop: '85%',
+    bottom: '-10%',
+    // marginTop: '85%',
     borderRadius: 24,
     width: '100%',
     alignItems: 'center',
@@ -270,8 +271,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Theme.white,
   },
-});
+})
 
 PokemonDetailScreen.navigationOptions = {
   headerShown: false,
-};
+}

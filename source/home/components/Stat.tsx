@@ -1,7 +1,7 @@
-import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
-import {Theme, getThemeByType} from '../../theme';
-import {MAX_STATS} from '../core/constants';
+import React from 'react'
+import {View, StyleSheet, Text} from 'react-native'
+import {Theme, getThemeByType} from '../../theme'
+import {MAX_STATS} from '../core/constants'
 
 type FullAttributeType =
   | 'hp'
@@ -9,15 +9,15 @@ type FullAttributeType =
   | 'defense'
   | 'special-attack'
   | 'special-defense'
-  | 'speed';
-type ShortAttributeType = 'HP' | 'ATK' | 'DEF' | 'SATK' | 'SDEF' | 'SPD';
-type ShortStatType = [FullAttributeType, ShortAttributeType];
+  | 'speed'
+type ShortAttributeType = 'HP' | 'ATK' | 'DEF' | 'SATK' | 'SDEF' | 'SPD'
+type ShortStatType = [FullAttributeType, ShortAttributeType]
 
 export type StatType = {
-  name: FullAttributeType;
-  baseStat: number;
-  type: string;
-};
+  name: FullAttributeType
+  baseStat: number
+  type: string
+}
 
 export default function Stat({name, baseStat, type}: StatType) {
   const dictionaryStat: ShortStatType[] = [
@@ -27,21 +27,21 @@ export default function Stat({name, baseStat, type}: StatType) {
     ['special-attack', 'SATK'],
     ['special-defense', 'SDEF'],
     ['speed', 'SPD'],
-  ];
+  ]
   const [, shortName] = dictionaryStat.find(
     ([item]) => item === name,
-  ) as ShortStatType;
+  ) as ShortStatType
 
   function percentStat() {
-    return (baseStat / MAX_STATS[shortName]) * 100;
+    return (baseStat / MAX_STATS[shortName]) * 100
   }
 
   function paintStatBar() {
-    return percentStat().toString().concat('%');
+    return percentStat().toString().concat('%')
   }
 
   function opacityStatBar() {
-    return (100 - percentStat()).toString().concat('%');
+    return (100 - percentStat()).toString().concat('%')
   }
 
   return (
@@ -76,7 +76,7 @@ export default function Stat({name, baseStat, type}: StatType) {
         />
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -116,4 +116,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     justifyContent: 'space-between',
   },
-});
+})

@@ -1,13 +1,17 @@
-import React, {useState, useEffect} from 'react';;
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';;
-import {SearchBar, PokemonCard} from '../components';;
-import PokeballHeaderIllustration from '../../../assets/svgs/pokeball-header.svg';
-import SortByNumberIllustration from '../../../assets/svgs/sort-by-number.svg';
-import SortByNameIllustration from '../../../assets/svgs/sort-by-name.svg';
-import {Pokemon} from '../types';;
-import axios from 'axios';
-import {Theme} from '../../theme';;
-import {Button, Alert} from 'react-native';
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import PokeballHeaderIllustration from '../../../assets/svgs/pokeball-header.svg'
+import SortByNameIllustration from '../../../assets/svgs/sort-by-name.svg'
+import SortByNumberIllustration from '../../../assets/svgs/sort-by-number.svg'
+import { Theme } from '../../theme'
+import { PokemonCard, SearchBar } from '../components'
+import { Pokemon } from '../types'
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs([
+  "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
+]);
 
 const pokemonOne: Pokemon = {
   name: 'charizard',
@@ -15,62 +19,43 @@ const pokemonOne: Pokemon = {
     'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
   types: ['fire', 'flying'],
   id: 6,
-};
+}
 
 const INITIAL_STATE: Pokemon = {
   name: '',
   frontDefault: '',
   types: [''],
   id: 0,
-};
+}
 
 async function useGetRequest() {
   const results = await axios.get(
-    'https://pokeapi.co/api/v2/pokemon?limit=3&offset=0',
-  );;
-  return results.data.results;
+    'https://pokeapi.co/api/v2/pokemon?limit=2&offset=0',
+  )
+  return results.data.results
 }
 
 async function useGetPokemon(url: string) {
-  const results = await axios.get(url);
-  // console.log(JSON.stringify(results.data,null,2))
-  return results.data;
+  const results = await axios.get(url)
+  // console.log(results.data)
+  return results.data
 }
 
 export default function HomePokedexScreen() {
-  const [pokemons, setPokemons] = useState([]);
-  const [pokemon, setPokemon] = useState<Pokemon>(INITIAL_STATE);
+  const [pokemons, setPokemons] = useState<{ name: string, url: string }[]>([])
+  const [pokemon, setPokemon] = useState<Pokemon>(INITIAL_STATE)
 
   useEffect(() => {
     useGetRequest().then(results => {
-      setPokemons(results);
-    });
-  }, []);
+      setPokemons(results)
+    })
+  }, [])
 
-  function renderPokemonCard() {
-    pokemons?.map(item => {
-      useGetPokemon(item.url).then(data => {
-        const {name, id, types, sprites} = data;;
-        const [{type: firstType}, {type: secondType}] = types;;
-        const nameTypes = [firstType.name, secondType.name];
-        const {other} = sprites;;
-        const officialArtwork = other['official-artwork'];
-        const frontDefault = officialArtwork.front_default;
-        const newPokemon: Pokemon = {
-          name,
-          id,
-          frontDefault,
-          types: nameTypes,
-        };
-        // console.log(newPokemon)
-        return <PokemonCard data={pokemon} />;
-      });
-    });
-  }
-  const [filter, setFilter] = useState('SortByNumber');
+  const [filter, setFilter] = useState('SortByNumber')
+
   function onPressChangeFilter() {
-    if (filter === 'SortByNumber') setFilter('SortByName');;
-    else setFilter('SortByNumber');;
+    if (filter === 'SortByNumber') setFilter('SortByName')
+    else setFilter('SortByNumber')
   }
 
   return (
@@ -81,7 +66,7 @@ export default function HomePokedexScreen() {
         </View>
         <View style={styles.pokedexTextContainer}>
           <Text
-            style={{fontWeight: 'bold', fontSize: 24, color: Theme.darkGray}}>
+            style={{ fontWeight: 'bold', fontSize: 24, color: Theme.darkGray }}>
             Pokédex
           </Text>
         </View>
@@ -96,10 +81,9 @@ export default function HomePokedexScreen() {
       <SearchBar />
       <View style={styles.cardsContainer}>
         <PokemonCard data={pokemonOne} />
-        {renderPokemonCard()}
-</View>
+      </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({

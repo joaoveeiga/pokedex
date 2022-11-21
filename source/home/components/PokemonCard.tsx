@@ -1,14 +1,14 @@
-import {useNavigation} from '@react-navigation/native';
-import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {Pokemon} from '../types';
-import {Theme, getThemeByType} from '../../theme';
-import {Formatter} from '../core/utils';
-import PokemonDetail from '../types/pokemonDetailType';
+import {useNavigation} from '@react-navigation/native'
+import React from 'react'
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import {Pokemon} from '../types'
+import {Theme, getThemeByType} from '../../theme'
+import {Formatter} from '../core/utils'
+import PokemonDetail from '../types/pokemonDetailType'
 
 export type PokemonCardProps = {
-  data: Pokemon;
-};
+  data: any
+}
 
 const pokemonOneDetail: PokemonDetail = {
   name: 'charizard',
@@ -28,8 +28,8 @@ const pokemonOneDetail: PokemonDetail = {
       isHidden: true,
     },
   ],
-  description:
-    'Spits fire that is hot enough to melt boulders. Known to cause forest fires unintentionally.',
+  // description:
+  //   'Spits fire that is hot enough to melt boulders. Known to cause forest fires unintentionally.',
   stats: [
     {
       baseStat: 78,
@@ -56,16 +56,16 @@ const pokemonOneDetail: PokemonDetail = {
       name: 'speed',
     },
   ],
-};
+}
 
 export default function PokemonCard({data}: PokemonCardProps) {
-  const {frontDefault, id, name, types} = data;
-  const navigation = useNavigation();
+  const {frontDefault, id, name, types} = data
+  const navigation = useNavigation()
 
   function onPress() {
     navigation.navigate('PokemonDetailScreen', {
       data: pokemonOneDetail,
-    });
+    })
   }
 
   return (
@@ -93,7 +93,7 @@ export default function PokemonCard({data}: PokemonCardProps) {
         </View>
       </TouchableOpacity>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -128,4 +128,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
   },
-});
+})

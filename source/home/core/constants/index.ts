@@ -1,1 +1,1 @@
-export {default as MAX_STATS} from './MaxStats';
+export {default as MAX_STATS} from './MaxStats'

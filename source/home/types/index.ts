@@ -1,1 +1,1 @@
-export {default as Pokemon} from './pokemonType';
+export {default as Pokemon} from './pokemonType'

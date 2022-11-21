@@ -22,7 +22,7 @@ const Theme: ThemeType = {
   lightGray: '#E0E0E0',
   white: '#FFFFFF',
   background: '#F7F7F7',
-};
+}
 
 const dynamicTheme: any = {
   rock: '#B69E31',
@@ -48,36 +48,36 @@ const dynamicTheme: any = {
   lightGray: '#E0E0E0',
   white: '#FFFFFF',
   background: '#F7F7F7',
-};
+}
 
 export function getThemeByType(type: string) {
-  return dynamicTheme[type] ?? dynamicTheme.white;
+  return dynamicTheme[type] ?? dynamicTheme.white
 }
 
 export type ThemeType = {
-  rock: string;
-  ghost: string;
-  steel: string;
-  water: string;
-  grass: string;
-  psychic: string;
-  ice: string;
-  dark: string;
-  fairy: string;
-  normal: string;
-  fighting: string;
-  flying: string;
-  poison: string;
-  ground: string;
-  bug: string;
-  fire: string;
-  electric: string;
-  dragon: string;
-  darkGray: string;
-  mediumGray: string;
-  lightGray: string;
-  white: string;
-  background: string;
-};
+  rock: string
+  ghost: string
+  steel: string
+  water: string
+  grass: string
+  psychic: string
+  ice: string
+  dark: string
+  fairy: string
+  normal: string
+  fighting: string
+  flying: string
+  poison: string
+  ground: string
+  bug: string
+  fire: string
+  electric: string
+  dragon: string
+  darkGray: string
+  mediumGray: string
+  lightGray: string
+  white: string
+  background: string
+}
 
-export default Theme;
+export default Theme
